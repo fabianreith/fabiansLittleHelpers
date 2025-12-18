@@ -11,11 +11,8 @@ COMMON_COLORS_RETURN_STATUS_TRUE=yellow
 COMMON_COLORS_RETURN_STATUS_FALSE=red
 COMMON_COLORS_BG_JOBS=yellow
 
-# Prompt symbol
-COMMON_PROMPT_SYMBOL=">"
-
 # Left Prompt
-PROMPT='$(common_host)%{$fg[cyan]%}%~%{$reset_color%} $(common_bg_jobs)$(common_return_status)'
+PROMPT='$(common_host)%{$fg[cyan]%}%~%{$reset_color%} $(common_bg_jobs)'
 
 # Right Prompt
 RPROMPT='$(common_git_status)'
@@ -59,11 +56,6 @@ common_git_status() {
 common_bg_jobs() {
   bg_status="%{$fg[$COMMON_COLORS_BG_JOBS]%}%(1j.↓%j .)"
   echo -n $bg_status
-}
-
-# Return status indicator (prompt symbol changes color based on last command exit code)
-common_return_status() {
-  echo -n "%(?.%F{$COMMON_COLORS_RETURN_STATUS_TRUE}.%F{$COMMON_COLORS_RETURN_STATUS_FALSE})$COMMON_PROMPT_SYMBOL%f "
 }
 
 # Git prompt SHA (for optional use)
