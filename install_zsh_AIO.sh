@@ -293,6 +293,67 @@ install_eza() {
 }
 
 # ============================================================================
+# Install Nerd Font (required for icons in eza, terminal prompts, etc.)
+# ============================================================================
+install_nerdfonts() {
+    print_step "Installing Nerd Fonts (for terminal icons)..."
+    
+    local FONT_NAME="JetBrainsMono"
+    local FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip"
+    
+    # Determine font directory based on OS
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        FONT_DIR="$HOME/Library/Fonts"
+    else
+        FONT_DIR="$HOME/.local/share/fonts"
+    fi
+    
+    # Check if already installed
+    if fc-list 2>/dev/null | grep -qi "JetBrainsMono Nerd Font"; then
+        print_success "JetBrainsMono Nerd Font already installed"
+        return
+    fi
+    
+    # Create font directory if needed
+    mkdir -p "$FONT_DIR"
+    
+    # Download and install
+    print_step "Downloading JetBrainsMono Nerd Font..."
+    local TEMP_DIR=$(mktemp -d)
+    
+    if command -v wget &> /dev/null; then
+        wget -q --show-progress -O "$TEMP_DIR/$FONT_NAME.zip" "$FONT_URL"
+    elif command -v curl &> /dev/null; then
+        curl -L --progress-bar -o "$TEMP_DIR/$FONT_NAME.zip" "$FONT_URL"
+    else
+        print_warning "Neither wget nor curl found. Cannot download fonts."
+        rm -rf "$TEMP_DIR"
+        return
+    fi
+    
+    # Extract fonts (only .ttf files, skip Windows-compatible fonts)
+    print_step "Extracting fonts..."
+    unzip -q "$TEMP_DIR/$FONT_NAME.zip" -d "$TEMP_DIR/fonts"
+    
+    # Copy only regular TTF files (not Windows-compatible ones)
+    find "$TEMP_DIR/fonts" -name "*.ttf" ! -name "*Windows*" -exec cp {} "$FONT_DIR/" \;
+    
+    # Cleanup
+    rm -rf "$TEMP_DIR"
+    
+    # Refresh font cache (Linux only)
+    if [[ "$OSTYPE" != "darwin"* ]]; then
+        if command -v fc-cache &> /dev/null; then
+            print_step "Refreshing font cache..."
+            fc-cache -f "$FONT_DIR"
+        fi
+    fi
+    
+    print_success "JetBrainsMono Nerd Font installed"
+    echo "  NOTE: You may need to configure your terminal to use 'JetBrainsMono Nerd Font'"
+}
+
+# ============================================================================
 # Install zsh plugins
 # ============================================================================
 install_plugins() {
@@ -412,6 +473,7 @@ main() {
     install_fzf
     install_bat
     install_eza
+    install_nerdfonts
     install_plugins
     install_theme
     configure_zshrc
