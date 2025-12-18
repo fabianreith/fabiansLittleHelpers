@@ -191,6 +191,70 @@ install_thefuck() {
 }
 
 # ============================================================================
+# Install fzf (fuzzy finder)
+# ============================================================================
+install_fzf() {
+    print_step "Installing fzf (fuzzy finder)..."
+    
+    if command -v fzf &> /dev/null; then
+        print_success "fzf is already installed"
+    else
+        case $PKG_MANAGER in
+            apt)
+                sudo apt install -y fzf
+                ;;
+            dnf)
+                sudo dnf install -y fzf
+                ;;
+            pacman)
+                sudo pacman -S --noconfirm fzf
+                ;;
+            brew)
+                brew install fzf
+                ;;
+            *)
+                # Fallback: install from git
+                git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+                ~/.fzf/install --all --no-bash --no-fish
+                ;;
+        esac
+        print_success "fzf installed (Ctrl+R for fuzzy history search)"
+    fi
+}
+
+# ============================================================================
+# Install bat (better cat with syntax highlighting)
+# ============================================================================
+install_bat() {
+    print_step "Installing bat (syntax-highlighted cat)..."
+    
+    # bat is sometimes called 'batcat' on Debian/Ubuntu
+    if command -v bat &> /dev/null || command -v batcat &> /dev/null; then
+        print_success "bat is already installed"
+    else
+        case $PKG_MANAGER in
+            apt)
+                sudo apt install -y bat
+                ;;
+            dnf)
+                sudo dnf install -y bat
+                ;;
+            pacman)
+                sudo pacman -S --noconfirm bat
+                ;;
+            brew)
+                brew install bat
+                ;;
+            *)
+                print_warning "Could not install bat (unknown package manager)"
+                return
+                ;;
+        esac
+        print_success "bat installed"
+    fi
+}
+
+# ============================================================================
 # Install zsh plugins
 # ============================================================================
 install_plugins() {
@@ -307,6 +371,8 @@ main() {
     install_ohmyzsh
     install_fasd
     install_thefuck
+    install_fzf
+    install_bat
     install_plugins
     install_theme
     configure_zshrc
@@ -325,6 +391,9 @@ main() {
     echo "  pls         - Correct previous failed command (thefuck)"
     echo "  copypath    - Copy current directory to clipboard"
     echo "  extract <f> - Extract any archive"
+    echo "  Ctrl+R      - Fuzzy search command history (fzf)"
+    echo "  Ctrl+T      - Fuzzy search files (fzf)"
+    echo "  cat <file>  - View file with syntax highlighting (bat)"
     echo "  Ctrl+Space  - Accept autosuggestion"
     echo "  Ctrl+J      - Accept and execute autosuggestion"
     echo "  ESC ESC     - Add sudo to current command"

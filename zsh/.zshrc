@@ -20,6 +20,7 @@ ZSH_THEME="fabi_new"
 # - copypath: 'copypath' copies current directory path to clipboard
 # - colored-man-pages: colorful man pages
 # - fasd: quick access to frequent files/directories (j, z, v commands)
+# - fzf: fuzzy finder (Ctrl+R for history, Ctrl+T for files)
 # - zsh-autosuggestions: fish-like autosuggestions
 # - zsh-syntax-highlighting: syntax highlighting (must be last)
 plugins=(
@@ -29,6 +30,7 @@ plugins=(
     copypath
     colored-man-pages
     fasd
+    fzf
     zsh-autosuggestions
     zsh-syntax-highlighting
 )
@@ -44,6 +46,15 @@ export EDITOR='vim'
 
 # Custom aliases
 alias ls="ls -aF --color=auto"
+
+# bat - better cat with syntax highlighting
+# On Debian/Ubuntu it's installed as 'batcat', elsewhere as 'bat'
+if command -v batcat &> /dev/null; then
+    alias cat='batcat --style=plain --paging=never'
+    alias bat='batcat'
+elif command -v bat &> /dev/null; then
+    alias cat='bat --style=plain --paging=never'
+fi
 
 # fasd shortcuts (in addition to oh-my-zsh fasd plugin defaults)
 # j <pattern>  - jump to directory matching pattern (alias for z)
