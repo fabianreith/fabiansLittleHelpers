@@ -255,6 +255,44 @@ install_bat() {
 }
 
 # ============================================================================
+# Install eza (modern ls replacement)
+# ============================================================================
+install_eza() {
+    print_step "Installing eza (modern ls)..."
+    
+    if command -v eza &> /dev/null; then
+        print_success "eza is already installed"
+    else
+        case $PKG_MANAGER in
+            apt)
+                # eza needs newer repo on Debian/Ubuntu
+                sudo apt install -y gpg
+                sudo mkdir -p /etc/apt/keyrings
+                wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+                echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
+                sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+                sudo apt update
+                sudo apt install -y eza
+                ;;
+            dnf)
+                sudo dnf install -y eza
+                ;;
+            pacman)
+                sudo pacman -S --noconfirm eza
+                ;;
+            brew)
+                brew install eza
+                ;;
+            *)
+                print_warning "Could not install eza (unknown package manager)"
+                return
+                ;;
+        esac
+        print_success "eza installed (try: eza -la --icons --git)"
+    fi
+}
+
+# ============================================================================
 # Install zsh plugins
 # ============================================================================
 install_plugins() {
@@ -373,6 +411,7 @@ main() {
     install_thefuck
     install_fzf
     install_bat
+    install_eza
     install_plugins
     install_theme
     configure_zshrc
@@ -394,6 +433,7 @@ main() {
     echo "  Ctrl+R      - Fuzzy search command history (fzf)"
     echo "  Ctrl+T      - Fuzzy search files (fzf)"
     echo "  cat <file>  - View file with syntax highlighting (bat)"
+    echo "  eza -la     - Modern ls with git status (try: eza --icons)"
     echo "  Ctrl+Space  - Accept autosuggestion"
     echo "  Ctrl+J      - Accept and execute autosuggestion"
     echo "  ESC ESC     - Add sudo to current command"
