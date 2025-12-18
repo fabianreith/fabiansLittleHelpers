@@ -1,5 +1,7 @@
 # move to ~/.ssh/ and name "config"
 # mkdir ~/.ssh/multiplexing
+
+# Global settings for all hosts
 Host *
      ControlMaster auto
      ControlPersist yes
@@ -8,28 +10,32 @@ Host *
      ServerAliveInterval 60
      ServerAliveCountMax 10
 
-Host mdc
-     User freith
-     HostName max-login1.mdc-berlin.net
-     IdentityFile   ~/.ssh/id_ws1
-     ProxyCommand ssh mdc-login -W %h:%p
+# Example: Server with jump host/proxy
+Host example-server
+     User <your-username>
+     HostName <server.example.com>
+     IdentityFile ~/.ssh/id_example
+     ProxyCommand ssh example-jump -W %h:%p
      Port 22
 
-Host mdc-login
-     User freith
-     HostName ssh1.mdc-berlin.de
-     IdentityFile   ~/.ssh/id_ws1
+# Example: Jump host / bastion
+Host example-jump
+     User <your-username>
+     HostName <jump.example.com>
+     IdentityFile ~/.ssh/id_example
      Port 22
 
-Host bih
-     User freith_m
-     HostName med-login2.bihealth.org
-     IdentityFile ~/.ssh/id_ws1
-     ProxyCommand ssh mdc-login -W %h:%p
+# Example: Server behind jump host
+Host example-internal
+     User <your-username>
+     HostName <internal.example.com>
+     IdentityFile ~/.ssh/id_example
+     ProxyCommand ssh example-jump -W %h:%p
      Port 22
 
-Host ws2
-     User ws1
-     HostName 141.20.65.111
-     IdentityFile ~/.ssh/id_ws1
+# Example: Direct connection with custom port
+Host example-direct
+     User <your-username>
+     HostName <ip-address-or-hostname>
+     IdentityFile ~/.ssh/id_example
      Port 2222

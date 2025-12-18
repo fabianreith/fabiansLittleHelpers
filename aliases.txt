@@ -1,1 +1,2 @@
-alias server="ssh -i /root/.ssh/id_server -t fabi@server.stanford.edu 'tmux a -t fabian; bash -l'"
+# Example server alias - replace with your own values
+alias server="ssh -i ~/.ssh/id_server -t <your-username>@<your-server.example.com> 'tmux a -t <session-name>; bash -l'"

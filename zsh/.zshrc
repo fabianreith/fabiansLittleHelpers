@@ -105,10 +105,9 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-# alias ls="ls -a"
 
-
-source .bashrc
+# Custom aliases (migrated from .bashrc)
+alias ls='ls -a'
 
 bindkey '^ ' autosuggest-accept
 bindkey '^j' autosuggest-execute
