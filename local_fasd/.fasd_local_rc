@@ -1,0 +1,19 @@
+# fasd functionality when sudo isn't available
+alias fasd="~/local_fasd/fasd"
+eval "$(~/local_fasd/fasd --init auto)"
+
+    # function to execute built-in cd
+    fasd_cd() {
+      if [ $# -le 1 ]; then
+        fasd "$@"
+      else
+        local _fasd_ret="$(fasd -e echo "$@")"
+        [ -z "$_fasd_ret" ] && return
+        [ -d "$_fasd_ret" ] && cd "$_fasd_ret" || echo "$_fasd_ret"
+      fi
+    }
+
+alias j='fasd_cd -d'
+alias v='fasd -f -e vim'
+alias d='fasd -d'
+

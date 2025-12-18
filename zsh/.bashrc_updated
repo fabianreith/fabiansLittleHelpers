@@ -1,0 +1,24 @@
+# Example server aliases with sshpass (password from file) and tmux attach
+# alias server_pass="sshpass -f ~/.ssh/server_pass ssh -t <user>@<server.example.com> 'tmux a -t <session>; bash -l'"
+# alias server="ssh -i ~/.ssh/id_server -t <user>@<server.example.com> 'tmux a -t <session>; bash -l'"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('$HOME/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="$HOME/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+eval "$(fasd --init auto)"
+
+# Example SSH alias with custom port
+# alias server="ssh -i ~/.ssh/id_server <user>@<ip-or-hostname> -p <port>"
+alias ls="ls -aF --color=auto"

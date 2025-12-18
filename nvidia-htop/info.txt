@@ -1,0 +1,16 @@
+# Description:
+# from https://github.com/peci1/nvidia-htop
+# nvidia-htop.py creates a prettier nvidia-smi that adds information such as:
+# - proces owner, memory useage, cpu useage, time running, command used
+
+# Install:
+# Install termcolor for python:
+pip install termcolor
+# create new alias
+new_alias="alias pretty-smi='nvidia-smi | python `realpath nvidia-htop.py` -l'"
+echo $new_alias
+
+# add new alias to .zshrc
+echo "# alias for nvidia-htop.py handle" >> ~/.zshrc
+echo $new_alias >> testrc >> ~/.zshrc
+# source ~/.zshrc

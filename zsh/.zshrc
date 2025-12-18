@@ -1,113 +1,53 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# ============================================================================
+# Zsh Configuration
+# ============================================================================
 
-# Path to your oh-my-zsh installation.
-export ZSH="/home/fabian/.oh-my-zsh"
-# export ZSH_CUSTOM="/home/fabian/.oh-my-zsh/custom"
+# Path to oh-my-zsh installation
+export ZSH="$HOME/.oh-my-zsh"
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
-# ZSH_THEME="powerlevel9k/powerlevel9k"
+# Theme - fabi_new with git status, background jobs, and return status indicators
+# Alternative: fabi_no_git_status (if git status causes issues)
+ZSH_THEME="fabi_new"
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git
-	sudo
-	extract
-	fasd
-	zsh-autosuggestions
-	zsh-syntax-highlighting)
-
+# Plugins
+# - git: git aliases and functions  
+# - sudo: press ESC twice to add sudo to current/previous command
+# - fasd: quick access to frequent files/directories (j, z, v commands)
+# - zsh-autosuggestions: fish-like autosuggestions
+# - zsh-syntax-highlighting: syntax highlighting (must be last)
+plugins=(
+    git
+    sudo
+    fasd
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+)
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+# ============================================================================
+# User Configuration
+# ============================================================================
 
-# export MANPATH="/usr/local/man:$MANPATH"
+# Preferred editor
+export EDITOR='vim'
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# Custom aliases
+alias ls="ls -aF --color=auto"
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+# fasd shortcuts (in addition to oh-my-zsh fasd plugin defaults)
+# j <pattern>  - jump to directory matching pattern (alias for z)
+# jj <pattern> - jump to subdirectory of current dir matching pattern  
+# v <pattern>  - open file matching pattern in vim
+# vv <pattern> - open file in current dir matching pattern in vim
+# d <pattern>  - print directory path matching pattern (useful: cp file $(d target))
+alias jj='fasd_cd -d $(pwd)'
+alias vv='fasd -f -e vim $(pwd)'
+alias d='fasd -d -e echo'
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+# zsh-autosuggestions keybindings
+bindkey '^ ' autosuggest-accept    # Ctrl+Space to accept suggestion
+bindkey '^j' autosuggest-execute   # Ctrl+J to accept and execute
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# Custom aliases (migrated from .bashrc)
-alias ls='ls -a'
-
-bindkey '^ ' autosuggest-accept
-bindkey '^j' autosuggest-execute
+# Don't save commands starting with space to history
+setopt HIST_IGNORE_SPACE

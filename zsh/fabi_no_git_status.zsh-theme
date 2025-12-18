@@ -6,7 +6,8 @@ COMMON_COLORS_GIT_PROMPT_SHA=green
 # PROMPT="%(?:%{$fg_bold[green]%}:%{$fg_bold[red]%})"
 PROMPT='$(common_host)%{$fg[cyan]%}%~%{$reset_color%} '
 # Right Prompt
-RPROMPT='$(common_git_status)'
+# git status for some reasons throws an error, here..
+# RPROMPT='$(common_git_status)'
 
 
 

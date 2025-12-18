@@ -1,0 +1,35 @@
+# fasd functionality when sudo isn't available
+# to bashrc/zshrc add:
+# source .fasd_local_rc
+
+# declare path to fasd - update this to where you installed local fasd
+PATH_FASD="$HOME/tools/local_fasd"
+# add fasd to path 
+export PATH="$PATH_FASD:$PATH"
+eval "$(fasd --init auto)"
+
+# function to execute built-in cd
+fasd_cd() {
+  if [ $# -le 1 ]; then
+    fasd "$@"
+  else
+    local _fasd_ret="$(fasd -e echo "$@")"
+    [ -z "$_fasd_ret" ] && return
+    [ -d "$_fasd_ret" ] && cd "$_fasd_ret" || echo "$_fasd_ret"
+  fi
+}
+
+# shorcuts
+# jump to certain directory
+alias j='fasd_cd -d'
+# jump to certain directory which is a subdirectory of the current directory
+alias jj='fasd_cd -d `pwd`' 
+# use vim to open certain file
+alias v='fasd -f -e vim'
+# use vim to open a certain file within current directory/subdir
+alias vv='fasd -f -e vim `pwd`'
+# this can be used in order to find the correct folder to copy something into, alas
+# cp file `d target folder`
+alias d='fasd -d'
+
+
