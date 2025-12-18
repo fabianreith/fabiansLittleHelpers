@@ -47,6 +47,14 @@ export EDITOR='vim'
 # Custom aliases
 alias ls="ls -aF --color=auto"
 
+# Global aliases - work anywhere in command line, not just at start
+# Usage: ls G txt → ls | grep txt
+alias -g G='| grep'      # grep
+alias -g L='| less'      # less
+alias -g H='| head'      # head
+alias -g T='| tail'      # tail
+alias -g C='| wc -l'     # count lines
+
 # bat - better cat with syntax highlighting
 # On Debian/Ubuntu it's installed as 'batcat', elsewhere as 'bat'
 if command -v batcat &> /dev/null; then
@@ -73,8 +81,9 @@ alias d='fasd -d -e echo'
 bindkey '^ ' autosuggest-accept    # Ctrl+Space to accept suggestion
 bindkey '^j' autosuggest-execute   # Ctrl+J to accept and execute
 
-# Don't save commands starting with space to history
-setopt HIST_IGNORE_SPACE
+# History options
+setopt HIST_IGNORE_SPACE           # Don't save commands starting with space
+setopt HIST_IGNORE_ALL_DUPS        # Remove ALL duplicate entries from history
 
 # thefuck - correct previous command (SFW alias: pls)
 # Usage: type 'pls' after a failed command to auto-correct it
