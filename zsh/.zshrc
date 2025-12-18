@@ -57,11 +57,14 @@ elif command -v bat &> /dev/null; then
 fi
 
 # fasd shortcuts (in addition to oh-my-zsh fasd plugin defaults)
-# j <pattern>  - jump to directory matching pattern (alias for z)
+# j <pattern>  - jump to best matching directory (auto-selects highest score)
+# ji <pattern> - interactive jump (shows list when multiple matches)
 # jj <pattern> - jump to subdirectory of current dir matching pattern  
 # v <pattern>  - open file matching pattern in vim
 # vv <pattern> - open file in current dir matching pattern in vim
 # d <pattern>  - print directory path matching pattern (useful: cp file $(d target))
+alias j='z'                       # Always jump to best match (no prompt)
+alias ji='fasd_cd -d'             # Interactive mode (shows choices)
 alias jj='fasd_cd -d $(pwd)'
 alias vv='fasd -f -e vim $(pwd)'
 alias d='fasd -d -e echo'
