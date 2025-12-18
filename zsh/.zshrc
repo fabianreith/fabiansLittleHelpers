@@ -5,6 +5,10 @@
 # Path to oh-my-zsh installation
 export ZSH="$HOME/.oh-my-zsh"
 
+# oh-my-zsh update settings
+zstyle ':omz:update' mode auto      # Auto-update silently in background
+zstyle ':omz:update' frequency 30   # Check for updates every 30 days
+
 # Theme - fabi_new with git status, background jobs, and return status indicators
 # Alternative: fabi_no_git_status (if git status causes issues)
 ZSH_THEME="fabi_new"
