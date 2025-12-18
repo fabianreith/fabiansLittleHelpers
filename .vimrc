@@ -14,8 +14,8 @@ set backspace=indent,eol,start  " Make backspace work normally
 " ----------------------------------------------------------------------------
 " UI Settings
 " ----------------------------------------------------------------------------
-set number                      " Show line numbers
-set relativenumber              " Relative line numbers (hybrid with number)
+" set number                    " Show line numbers (disabled)
+" set relativenumber            " Relative line numbers (disabled)
 set cursorline                  " Highlight current line
 set showmatch                   " Highlight matching brackets
 set showcmd                     " Show command in bottom bar
