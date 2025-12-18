@@ -16,12 +16,18 @@ ZSH_THEME="fabi_new"
 # Plugins
 # - git: git aliases and functions  
 # - sudo: press ESC twice to add sudo to current/previous command
+# - extract: extract any archive with 'extract <file>' (tar, zip, gz, bz2, etc.)
+# - copypath: 'copypath' copies current directory path to clipboard
+# - colored-man-pages: colorful man pages
 # - fasd: quick access to frequent files/directories (j, z, v commands)
 # - zsh-autosuggestions: fish-like autosuggestions
 # - zsh-syntax-highlighting: syntax highlighting (must be last)
 plugins=(
     git
     sudo
+    extract
+    copypath
+    colored-man-pages
     fasd
     zsh-autosuggestions
     zsh-syntax-highlighting
@@ -55,3 +61,9 @@ bindkey '^j' autosuggest-execute   # Ctrl+J to accept and execute
 
 # Don't save commands starting with space to history
 setopt HIST_IGNORE_SPACE
+
+# thefuck - correct previous command (SFW alias: pls)
+# Usage: type 'pls' after a failed command to auto-correct it
+if command -v thefuck &> /dev/null; then
+    eval $(thefuck --alias pls)
+fi

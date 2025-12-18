@@ -153,6 +153,44 @@ install_fasd_from_source() {
 }
 
 # ============================================================================
+# Install thefuck (command corrector)
+# ============================================================================
+install_thefuck() {
+    print_step "Installing thefuck (command corrector)..."
+    
+    if command -v thefuck &> /dev/null; then
+        print_success "thefuck is already installed"
+    else
+        case $PKG_MANAGER in
+            apt)
+                $PKG_INSTALL thefuck
+                ;;
+            dnf)
+                $PKG_INSTALL thefuck
+                ;;
+            pacman)
+                $PKG_INSTALL thefuck
+                ;;
+            brew)
+                $PKG_INSTALL thefuck
+                ;;
+            *)
+                # Fallback: install via pip
+                if command -v pip3 &> /dev/null; then
+                    pip3 install thefuck --user
+                elif command -v pip &> /dev/null; then
+                    pip install thefuck --user
+                else
+                    print_warning "Could not install thefuck (no pip found)"
+                    return
+                fi
+                ;;
+        esac
+        print_success "thefuck installed (use 'pls' to correct commands)"
+    fi
+}
+
+# ============================================================================
 # Install zsh plugins
 # ============================================================================
 install_plugins() {
@@ -268,6 +306,7 @@ main() {
     install_zsh
     install_ohmyzsh
     install_fasd
+    install_thefuck
     install_plugins
     install_theme
     configure_zshrc
@@ -283,6 +322,9 @@ main() {
     echo "  jj <dir>    - Jump to subdirectory of current dir"
     echo "  v <file>    - Edit frequently used file with vim"
     echo "  d <dir>     - Print directory path (for cp/mv)"
+    echo "  pls         - Correct previous failed command (thefuck)"
+    echo "  copypath    - Copy current directory to clipboard"
+    echo "  extract <f> - Extract any archive"
     echo "  Ctrl+Space  - Accept autosuggestion"
     echo "  Ctrl+J      - Accept and execute autosuggestion"
     echo "  ESC ESC     - Add sudo to current command"
