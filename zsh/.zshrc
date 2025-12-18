@@ -45,7 +45,15 @@ source $ZSH/oh-my-zsh.sh
 export EDITOR='vim'
 
 # Custom aliases
-alias ls="ls -aF --color=auto"
+# eza - modern ls replacement (https://github.com/eza-community/eza)
+if command -v eza &> /dev/null; then
+    alias ls='eza'
+    alias ll='eza -la'
+    alias la='eza -a'
+    alias lt='eza --tree --level=2'
+else
+    alias ls='ls -aF --color=auto'
+fi
 
 # Global aliases - work anywhere in command line, not just at start
 # Usage: ls G txt → ls | grep txt

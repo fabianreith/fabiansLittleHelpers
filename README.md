@@ -7,7 +7,7 @@ A curated collection of terminal configurations for zsh, vim, and tmux. One-comm
 - **Zsh** with oh-my-zsh, beautiful minimal theme, and productivity plugins
 - **Vim** configuration with sensible defaults
 - **Tmux** modern config with intuitive keybindings
-- **Tools**: fasd (directory jumping), fzf (fuzzy finder), bat (better cat), thefuck (command correction)
+- **Tools**: fasd (directory jumping), fzf (fuzzy finder), bat (better cat), eza (modern ls), thefuck (command correction)
 
 ## 🎯 Quick Start
 
@@ -74,6 +74,10 @@ fabian@server ~/path master    # SSH: user@host shown
 | `pls` | Correct previous failed command (thefuck) |
 | `extract <file>` | Extract any archive (tar, zip, gz, etc.) |
 | `copypath` | Copy current directory path to clipboard |
+| `ls` | eza with colors (modern ls replacement) |
+| `ll` | eza long format with hidden files |
+| `la` | eza all files |
+| `lt` | eza tree view (2 levels) |
 
 ### Global Aliases
 
@@ -137,6 +141,7 @@ ls C             # → ls | wc -l
 | [fasd](https://github.com/clvv/fasd) | Quick directory/file access | `apt install fasd` |
 | [fzf](https://github.com/junegunn/fzf) | Fuzzy finder | `apt install fzf` |
 | [bat](https://github.com/sharkdp/bat) | Better cat with syntax highlighting | `apt install bat` |
+| [eza](https://github.com/eza-community/eza) | Modern ls with colors & git status | `apt install eza` |
 | [thefuck](https://github.com/nvbn/thefuck) | Command correction | `apt install thefuck` |
 
 ## 🔌 Zsh Plugins

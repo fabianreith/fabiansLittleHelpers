@@ -473,7 +473,7 @@ main() {
     install_fzf
     install_bat
     install_eza
-    install_nerdfonts
+    # install_nerdfonts  # Uncomment if you have Nerd Font configured in your terminal
     install_plugins
     install_theme
     configure_zshrc
@@ -495,7 +495,8 @@ main() {
     echo "  Ctrl+R      - Fuzzy search command history (fzf)"
     echo "  Ctrl+T      - Fuzzy search files (fzf)"
     echo "  cat <file>  - View file with syntax highlighting (bat)"
-    echo "  eza -la     - Modern ls with git status (try: eza --icons)"
+    echo "  ls, ll, la  - eza aliases (modern ls with colors)"
+    echo "  lt          - eza tree view (2 levels)"
     echo "  Ctrl+Space  - Accept autosuggestion"
     echo "  Ctrl+J      - Accept and execute autosuggestion"
     echo "  ESC ESC     - Add sudo to current command"
