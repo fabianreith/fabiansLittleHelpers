@@ -163,16 +163,16 @@ install_thefuck() {
     else
         case $PKG_MANAGER in
             apt)
-                $PKG_INSTALL thefuck
+                sudo apt install -y thefuck
                 ;;
             dnf)
-                $PKG_INSTALL thefuck
+                sudo dnf install -y thefuck
                 ;;
             pacman)
-                $PKG_INSTALL thefuck
+                sudo pacman -S --noconfirm thefuck
                 ;;
             brew)
-                $PKG_INSTALL thefuck
+                brew install thefuck
                 ;;
             *)
                 # Fallback: install via pip
